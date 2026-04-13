@@ -1,1 +1,1 @@
-# Programtervez-informatikus-Bsc
+# ELTE IK
