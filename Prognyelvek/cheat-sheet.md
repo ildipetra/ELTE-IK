@@ -1,3 +1,49 @@
+- [Keyboard shortcuts](#keyboard-shortcuts)
+- [Hasznos oldalak](#hasznos-oldalak)
+- [Terminál](#terminál)
+- [Alap cuccok](#alap-cuccok)
+  - [Kiírás](#kiírás)
+  - [Beolvasás](#beolvasás)
+- [Ciklusok, elágazások](#ciklusok-elágazások)
+    - [for](#for)
+    - [if else](#if-else)
+    - [try..catch..](#trycatch)
+        - [Hibák](#hibák)
+- [Változók](#változók)
+    - [var](#var)
+    - [String](#string)
+        - [StringBuilder (import java.io.\*)](#stringbuilder-import-javaio)
+    - [int](#int)
+        - [Formatted](#formatted)
+- [Adatszerkezetek](#adatszerkezetek)
+    - [Tömb](#tömb)
+    - [Enum](#enum)
+    - [Record](#record)
+    - [List](#list)
+    - [ArrayList](#arraylist)
+    - [HashMap (import java.util.\*)](#hashmap-import-javautil)
+    - [HashSet (import java.util.\*)](#hashset-import-javautil)
+    - [Entry, EntrySet (import java.util.Map.Entry)](#entry-entryset-import-javautilmapentry)
+- [Függvények](#függvények)
+    - [Main](#main)
+  - [Argumentumok](#argumentumok)
+  - [Parancssori argumentumok](#parancssori-argumentumok)
+- [Osztályok](#osztályok)
+    - [Getter](#getter)
+- [Öröklődés](#öröklődés)
+    - [Exceptions](#exceptions)
+- [Csomagkezelés](#csomagkezelés)
+- [Importálás](#importálás)
+- [Tesztelés](#tesztelés)
+  - [Funkcionális tesztek](#funkcionális-tesztek)
+  - [Struktúrális tesztek](#struktúrális-tesztek)
+  - [Tesztelés futtatása](#tesztelés-futtatása)
+- [Generikusok](#generikusok)
+    - [Generikus metódusok](#generikus-metódusok)
+
+
+
+
 # Keyboard shortcuts
 - Use arrow keys for single steps.
 - Hold Ctrl with arrows to jump word by word.
@@ -38,6 +84,36 @@ Fájlba:
 IO.readln("Ez kiprintelődik a terminálra mielőtt beírod az inputot");  
 BufferedReader típus segítségével:  
 BufferedReader br = new BufferedReader(new FileReader(filename));
+
+# Ciklusok, elágazások
+### for 
+for (int i = _; i < _; i++) {_}
+
+"foreach"  
+for (típus var : vars) {_}
+
+### if else
+if () {}  
+else if () {}  
+else {}
+
+alternatíva: feltétel ? haigaz : hahamis
+
+### try..catch..
+
+try(utasítások ami alatt hibát dobhat){  
+    utasítások amiket akkor csinál meg, amikor nem kap hibát  
+}
+
+try {utasítások ami alatt hibát dobhat}  
+catch(hiba amit el kell kapni) {mit csináljon ha elkapta ezt a hibát}
+> több catch is lehet!
+
+##### Hibák
+throw new ExceptionNeve("Hibaüzenet");
+
+> a Hibaüzenet opcionális
+
 # Változók
 > Nem mindegy, hogy kis vagy nagybetűsek:(
 
@@ -62,8 +138,8 @@ típus név = ...;
     String """
 ```
 
-#### StringBuilder (import java.io.*)
-Hozzáfűzés: s.append(mit)
+##### StringBuilder (import java.io.*)
+Hozzáfűzés: s.append(amit hozzáfűzünk)
 
 ### int
 Konverzió (String -> int): int x = Integer.parseInt(szöveg);
@@ -210,28 +286,28 @@ konstruktora: láthatóság Osztály_neve(paraméterek) {\_}
 Példányosítás:  
 new Osztály_neve(paraméterek);
 
-# Ciklusok, elágazások
-### for 
-for (int i = _; i < _; i++) {_}
-
-"foreach"  
-for (típus var : vars) {_}
-
-### if else
-if () {}  
-else if () {}  
-else {}
-
-alternatíva: feltétel ? haigaz : hahamis
-
-### try..catch..
-try(utasítások ami alatt hibát dobhat){  
-    utasítások amiket akkor csinál meg, amikor nem kap hibát  
+### Getter
+```
+private String name;
+public String getName(){
+        return name;
 }
+```
 
-try {utasítások ami alatt hibát dobhat}  
-catch(hiba amit el kell kapni) {mit csináljon ha elkapta ezt a hibát}
-> több catch is lehet!
+# Öröklődés
+[W3Schools](https://www.w3schools.com/java/java_inheritance.asp)   
+[GeeksforGeeks super()](https://www.geeksforgeeks.org/java/super-keyword/)
+
+### Exceptions
+exception custom message-el:
+```
+public class InvalidBookException extends Exception{
+    public InvalidBookException(String message) {
+        super(message);
+    }
+}
+```
+
 
 
 # Csomagkezelés
@@ -296,7 +372,6 @@ catch (hiba){
 | Metódus | Mit jelent | 
 | ----- | -----|
 | hasConstructor(withArgsLikeAllFields) | olyan konstruktorral rendelkezik, aminek paraméterei az osztály adattagjainak felelnek meg |
-| hasUsualModifiers | (?????) |
 | hasMethod("név", withParams("név1: típus1")).thatreturns("típus") | olyan *típus* típusú, *név* nevű metódussal rendelkezik, aminek paraméterei a withparamsban van meghatározva |
 | .thatReturnsNothing | visszatérési értéke void |
 | theClass("text.to.numbers.SingleLineFile") | text.to.numbers packageben van benne a SingleLineFile class |
@@ -304,12 +379,27 @@ catch (hiba){
 | .thatThrows("x") | *x* exceptiont dob ami kiterjed a metóduson kívülre is (checked) <br> public típus Név(param)) throws x|
 |.hasField("név: típus")| *típus* típusú, *név* nevű adattaggal rendelkezik|
 
+|hasUsualModifiers  ||
+|----|----|
+|field| private|
+|metódus|public (nem static, nem final)|
+|osztály|public|
+|enum|public|
 
-|  |  | 
-| ----- | -----|
-| N. elem | l.get(n)  |
-| Hossz | t.size() |
-| Üres-e | t.isEmpty() |
+|thatIs  ||
+|----|----|
+|USABLE_WITHOUT_INSTANCE| static|
+|INSTANCE_LEVEL|nem static|
+|FULLY_IMPLEMENTED||
+|NOT_MODIFIABLE|final|
+|MODIFIABLE|nem final|
+|VISIBLE_TO_ALL|public|
+|VISIBLE_TO_SUBCLASSES|protected|
+|VISIBLE_TO_NONE|private|
+|TEXTUAL_REPRESENTATION|a default toString* felül van definiálva (@override)|
+
+> \*toString: kiírja az osztály szöveges reprezentációját
+
 
 ## Tesztelés futtatása
 > Tesztelés előtt fordítunk!! (javac elérési/út)
