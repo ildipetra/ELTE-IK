@@ -1,5 +1,5 @@
+- [Dokumentáció](#dokumentáció)
 - [Keyboard shortcuts](#keyboard-shortcuts)
-- [Hasznos oldalak](#hasznos-oldalak)
 - [Terminál](#terminál)
 - [Alap cuccok](#alap-cuccok)
   - [Kiírás](#kiírás)
@@ -7,6 +7,7 @@
 - [Ciklusok, elágazások](#ciklusok-elágazások)
     - [for](#for)
     - [if else](#if-else)
+    - [switch case](#switch-case)
     - [try..catch..](#trycatch)
         - [Hibák](#hibák)
 - [Változók](#változók)
@@ -19,8 +20,7 @@
     - [Tömb](#tömb)
     - [Enum](#enum)
     - [Record](#record)
-    - [List](#list)
-    - [ArrayList](#arraylist)
+    - [List -\> ArrayList/LinkedList](#list---arraylistlinkedlist)
     - [HashMap (import java.util.\*)](#hashmap-import-javautil)
     - [HashSet (import java.util.\*)](#hashset-import-javautil)
     - [Entry, EntrySet (import java.util.Map.Entry)](#entry-entryset-import-javautilmapentry)
@@ -41,8 +41,10 @@
 - [Generikusok](#generikusok)
     - [Generikus metódusok](#generikus-metódusok)
 
+# Dokumentáció
+> Elérhető lesz ZH-n
 
-
+[Link a dokumentációhoz](https://docs.oracle.com/en/java/javase/25/docs/api/index.html)
 
 # Keyboard shortcuts
 - Use arrow keys for single steps.
@@ -62,7 +64,6 @@
 - Use Tab in the terminal for file and folder autocompletion.
 - Use the Up Arrow in the terminal to recall previous commands.
 
-# Hasznos oldalak
 # Terminál
 1. Egyszerű futtatás: java filename.java
 2. Jshell (~ghci)  
@@ -77,6 +78,7 @@
 ## Kiírás
 IO.println(“szöveg”*.formatted(_)* + változó);  
 IO.print(_); -> nincs sortörés
+
 Fájlba:
 - létrehozás: PrintWriter pw = new PrintWriter(filename); 
 - írás: pw.println(string);
@@ -98,6 +100,20 @@ else if () {}
 else {}
 
 alternatíva: feltétel ? haigaz : hahamis
+
+### switch case
+```
+switch(expression) {
+  case x:
+    // code block
+    break;
+  case y:
+    // code block
+    break;
+  default:
+    // code block
+}
+```
 
 ### try..catch..
 
@@ -132,10 +148,10 @@ típus név = ...;
 |Hozzáfűzés| s+=mit|
 
 ```
-    "Egy soros String"
-    """ több 
-    soros 
-    String """
+"Egy soros String"
+""" több 
+soros 
+String """
 ```
 
 ##### StringBuilder (import java.io.*)
@@ -152,6 +168,12 @@ Konverzió (String -> int): int x = Integer.parseInt(szöveg);
 
 # Adatszerkezetek
 ### Tömb
+Példányosítás
+```
+típus[] név;
+típus[] név = {elem1, elem2, elem3};
+típus[] név = new String[3];
+```
 | Feladat | Metódus | 
 | ----- | -----|
 | Első elem | t[0]   |
@@ -165,6 +187,8 @@ hivatkozás egy tagjára: Név.ADATX
 típusa: var  
 hányadik a felsorolásban (0-tól indexel): e.ordinal()
 összehasonlítás: n.ADAT1 == n.ADAT2  
+Enummá konvertálás stringből: Enum.valueOf(string)
+
 >n.ADAT1 == m.ADAT2 -> NEM FORDUL LE
 
 for (var rank : Rank.values()) {_}
@@ -188,7 +212,9 @@ switch (duo){
 }
 ```
 
-### List
+### List -> ArrayList/LinkedList
+> A List csak egy interface, nem lehet példányosítani!!!
+
 List<típus> név = new List<típus>();  
 List<típus> név = List.of(elem1, elem2, stb.);
 
@@ -200,7 +226,6 @@ List<típus> név = List.of(elem1, elem2, stb.);
 
 >~~int~~ -> Integer
 
-### ArrayList
 
 ### HashMap (import java.util.*)
 HashMap\<kulcs típusa, érték típusa\>
@@ -251,13 +276,13 @@ Bejárás:
 # Függvények
 láthatóság (static) visszatérési_érték név(paraméterek) {törzs}
 ### Main
+```
 public class Filename{
-    public static void main(String... args) {_}
-    vagy
-    public static void main() {_}
+    public static void main(String... args) {_}  
+    vagy  
+    public static void main() {_}  
 }
-
-
+```
 ## Argumentumok
 változók: típus név  
 tömbök: típus... név  
@@ -286,6 +311,9 @@ konstruktora: láthatóság Osztály_neve(paraméterek) {\_}
 Példányosítás:  
 new Osztály_neve(paraméterek);
 
+super(param...) -> ráhív a szülő konstruktorára  
+this(param...) -> ráhív a saját (másik) konstruktorra
+
 ### Getter
 ```
 private String name;
@@ -298,10 +326,21 @@ public String getName(){
 [W3Schools](https://www.w3schools.com/java/java_inheritance.asp)   
 [GeeksforGeeks super()](https://www.geeksforgeeks.org/java/super-keyword/)
 
+super(param...) -> ráhív a szülő konstruktorára
+
 ### Exceptions
+
+Checked exception 
+```
+public class Class throws Ex1, Ex2 ... {
+
+}
+```
+
 exception custom message-el:
 ```
 public class InvalidBookException extends Exception{
+    //konstruktor
     public InvalidBookException(String message) {
         super(message);
     }
@@ -378,6 +417,10 @@ catch (hiba){
 |hasConstructor(withNoParams())|alapértelmezett konstruktor jó, nem kell külön konstruktor|
 | .thatThrows("x") | *x* exceptiont dob ami kiterjed a metóduson kívülre is (checked) <br> public típus Név(param)) throws x|
 |.hasField("név: típus")| *típus* típusú, *név* nevű adattaggal rendelkezik|
+|Use.theCheckedException("teljes.minősített.NévException")|public class Név extends Exception|
+| withArgsLikeAllFields()| olyan metódus, aminek paraméterei az osztály adattagjainak felelnek meg |
+|withArgsLikeFields(_)|_ paraméterekkel rendelkező metódus|
+|withArgsLikeFields()|mivel nincs felsorlva semmi, ezért azt jelenti, hogy a metódusnak nincsenek paraméterei|
 
 |hasUsualModifiers  ||
 |----|----|
@@ -406,7 +449,7 @@ catch (hiba){
 
 > Bele kell rakni a teszteléshez szükséges fileokat (check.cmd, checkagent6.jar, checkthat6.jar, junit6all.jar) a gyökérmappába amiben tesztelünk
 
-.\check.cmd elérési\út\TesztFájlNeve.java teljes.minősített.Név  
+.\check.cmd elérési\út\TesztFájlNeve.java teljes.minősített.Név   
 pld: .\check.cmd .\famous\sequence\FibonacciTest.java famous.sequence.FibonacciTest
 
 # Generikusok
@@ -417,7 +460,7 @@ class Név<T>
 
 > kizárólag referencia típusokat fogad el! -> ~~int~~ -> Integer
 
-> T bármi lehet, 
+> T bármi lehet
 
 ### Generikus metódusok
 bármilyen T típussal működik  
