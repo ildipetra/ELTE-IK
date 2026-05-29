@@ -32,6 +32,9 @@
     - [Getter](#getter)
 - [Öröklődés](#öröklődés)
     - [Exceptions](#exceptions)
+        - [Checked exception (ellenőrzött kivétel)](#checked-exception-ellenőrzött-kivétel)
+        - [Unchecked exception (nem ellenőrzött kivétel)](#unchecked-exception-nem-ellenőrzött-kivétel)
+        - [SupressWarnings](#supresswarnings)
 - [Csomagkezelés](#csomagkezelés)
 - [Importálás](#importálás)
 - [Tesztelés](#tesztelés)
@@ -327,10 +330,11 @@ public String getName(){
 [GeeksforGeeks super()](https://www.geeksforgeeks.org/java/super-keyword/)
 
 super(param...) -> ráhív a szülő konstruktorára
+this(param...) -> ráhív a saját (másik) konstruktorra
 
-### Exceptions
+### Exceptions 
 
-Checked exception 
+##### Checked exception (ellenőrzött kivétel)
 ```
 public class Class throws Ex1, Ex2 ... {
 
@@ -346,8 +350,21 @@ public class InvalidBookException extends Exception{
     }
 }
 ```
+##### Unchecked exception (nem ellenőrzött kivétel)
+```
+public class XYException extends RuntimeException {
+    ...
+}
+```
 
-
+##### SupressWarnings
+```
+@SupressWarnings("serial") 
+public _ Valami(){
+    ...
+}
+```
+> a metódusfigyelmen kívül hagyja a kivételeket
 
 # Csomagkezelés
 File elejére:  
@@ -460,7 +477,7 @@ class Név<T>
 
 > kizárólag referencia típusokat fogad el! -> ~~int~~ -> Integer
 
-> T bármi lehet
+> T bármi lehet, 
 
 ### Generikus metódusok
 bármilyen T típussal működik  
