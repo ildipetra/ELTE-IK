@@ -126,6 +126,7 @@ try(utasítások ami alatt hibát dobhat){
 
 try {utasítások ami alatt hibát dobhat}  
 catch(hiba amit el kell kapni) {mit csináljon ha elkapta ezt a hibát}
+finally{mindenképpen lefut}
 > több catch is lehet!
 
 ##### Hibák
