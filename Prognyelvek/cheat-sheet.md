@@ -301,6 +301,28 @@ Első argumentum: args[0]
 N. argumentum: args[n]  
 Argumentumok száma: args.length
 
+## equals, hashCode (import java.util.Objects)
+```
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Vehicle other)){
+            return false;
+        }
+        if(this.vehicleType != other.vehicleType && this.licensePlate != other.licensePlate && this.price != other.price){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(vehicleType, licensePlate, price);
+    }
+```
+
 # Osztályok
 > nagybetűvel kezdjük a nevüket
 
@@ -451,13 +473,15 @@ catch (hiba){
 |----|----|
 |USABLE_WITHOUT_INSTANCE| static|
 |INSTANCE_LEVEL|nem static|
-|FULLY_IMPLEMENTED||
+|NOT_FULLY_IMPLEMENTED|interface|
+|FULLY_IMPLEMENTED|nem interface|
 |NOT_MODIFIABLE|final|
 |MODIFIABLE|nem final|
 |VISIBLE_TO_ALL|public|
 |VISIBLE_TO_SUBCLASSES|protected|
 |VISIBLE_TO_NONE|private|
 |TEXTUAL_REPRESENTATION|a default toString* felül van definiálva (@override)|
+|EQUALITY_CHECK|a default equals és a hashCode felül van definiálva (@override)|
 
 > \*toString: kiírja az osztály szöveges reprezentációját
 
